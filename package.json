@@ -12,6 +12,8 @@
     "gulp": "^4.0.2",
     "gulp-sass": "^4.0.2"
   },
-  "dependencies": {},
+  "dependencies": {
+    "axios": "^0.18.1"
+  },
   "description": ""
 }

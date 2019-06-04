@@ -5,7 +5,10 @@ const gulp = require('gulp');
 
 // Include Our Plugins
 const sass = require('gulp-sass');
-var browserSync = require('browser-sync').create();
+const browserSync = require('browser-sync').create();
+const uglifyjs = require('uglify-es');
+const composer = require('gulp-uglify/composer');
+const pump = require('pump');
 
 // Compile Sass & Inject Into Browser
 gulp.task('sass', function() {
@@ -22,11 +25,25 @@ gulp.task('browser-sync', function() {
   });
 });
 
-// Watch Sass & Serve
+// Minify JavaScript with UglifyJS3.
+gulp.task('handleJs', function (cb) {
+  var options = {};
+
+  pump([
+      gulp.src('src/scripts/app.js'),
+      minify(options),
+      gulp.dest('dist/scripts')
+    ],
+    cb
+  );
+});
+
+// Default task
 gulp.task('default', function() {
   browserSync.init({
     server: "./dist"
   });
   gulp.watch('src/sass/**/*.scss', gulp.series('sass'));
+  gulp.watch('src/scripts/app.js', gulp.series('handleJs'));
   gulp.watch("dist/**/*").on('change', browserSync.reload);
 });
