@@ -10,7 +10,10 @@
   "devDependencies": {
     "browser-sync": "^2.26.5",
     "gulp": "^4.0.2",
-    "gulp-sass": "^4.0.2"
+    "gulp-sass": "^4.0.2",
+    "gulp-uglify": "^3.0.2",
+    "pump": "^3.0.0",
+    "uglify-es": "^3.3.9"
   },
   "dependencies": {
     "axios": "^0.18.1"

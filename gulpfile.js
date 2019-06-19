@@ -10,6 +10,8 @@ const uglifyjs = require('uglify-es');
 const composer = require('gulp-uglify/composer');
 const pump = require('pump');
 
+var minify = composer(uglifyjs, console);
+
 // Compile Sass & Inject Into Browser
 gulp.task('sass', function() {
   return gulp.src('./src/sass/**/*.scss')
