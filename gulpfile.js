@@ -9,6 +9,8 @@ const browserSync = require('browser-sync').create();
 const uglifyjs = require('uglify-es');
 const composer = require('gulp-uglify/composer');
 const pump = require('pump');
+const {src, task} = require('gulp');
+const eslint = require('gulp-eslint');
 
 var minify = composer(uglifyjs, console);
 
@@ -40,6 +42,15 @@ gulp.task('handleJs', function (cb) {
   );
 });
 
+//Eslint
+gulp.task('lint', function () {
+  return gulp.src(["./src/scripts/*.js"])
+    .pipe(eslint())
+    .pipe(eslint.format())
+    .pipe(eslint.failAfterError());
+});
+
+
 // Default task
 gulp.task('default', function() {
   browserSync.init({
@@ -47,5 +58,6 @@ gulp.task('default', function() {
   });
   gulp.watch('src/sass/**/*.scss', gulp.series('sass'));
   gulp.watch('src/scripts/app.js', gulp.series('handleJs'));
+  gulp.watch('src/scripts/*.js', gulp.series('lint'));
   gulp.watch("dist/**/*").on('change', browserSync.reload);
 });
