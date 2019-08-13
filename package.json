@@ -3,21 +3,38 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "serve": "browser-sync start --server dist/ --files dist/**",
+    "scss": "node-sass --output-style compressed -o dist/css src/sass",
+    "autoprefixer": "postcss -u autoprefixer -r dist/css/*",
+    "lint": "eslint src/**/*.js",
+    "uglify": "uglifyjs src/scripts/**.js -o dist/scripts/app.min.js",
+    "imagemin": "imagemin src/images/* -o dist/images",
+    "build:css": "npm run scss && npm run autoprefixer",
+    "build:js": "npm run uglify",
+    "build:img": "npm run imagemin",
+    "watch:css": "onchange 'src/**/*.scss' -- npm run build:css",
+    "watch:js": "onchange 'src/**/*.js' -- npm run build:js",
+    "watch:img": "onchange 'src/images/**/*' -- npm run build:images",
+    "watch": "npm-run-all --parallel serve watch:**"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "autoprefixer": "^9.6.1",
     "browser-sync": "^2.26.7",
     "eslint": "^6.1.0",
+    "eslint-config-standard": "^13.0.1",
     "eslint-plugin-node": "^9.1.0",
-    "gulp": "^4.0.2",
-    "gulp-eslint": "^6.0.0",
-    "gulp-sass": "^4.0.2",
-    "gulp-uglify": "^3.0.2",
-    "prettier-eslint": "^9.0.0",
+    "imagemin": "^7.0.0",
+    "imagemin-cli": "^5.0.0",
+    "node-sass": "^4.12.0",
+    "npm-run-all": "^4.1.5",
+    "onchange": "^6.0.0",
+    "postcss": "^7.0.17",
+    "postcss-cli": "^6.1.3",
     "pump": "^3.0.0",
-    "uglify-es": "^3.3.9"
+    "uglify-es": "^3.3.9",
+    "uglify-js": "^3.6.0"
   },
   "dependencies": {
     "axios": "^0.18.1"
