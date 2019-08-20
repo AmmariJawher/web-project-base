@@ -1,4 +1,2 @@
-console.log("hello"
-+ "my"
-+ "world")
-
+var rebel = 'Anri has'
+console.log('rebel');
